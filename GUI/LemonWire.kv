@@ -1,0 +1,139 @@
+#:import NoTransition kivy.uix.screenmanager.NoTransition
+
+<CustButton@Button>:
+	font_size: 15
+	background_normal: ''
+	background_color: 1, 0, 0, 1
+	size_hint: 1, .1
+	
+<Background>:
+	canvas:
+		Color:
+			rgba: 0, 0, 0, 1
+		Rectangle:
+			pos: self.pos
+			size: self.size	
+	spacing: 3
+	orientation: 'vertical'
+	TopMenu:
+	Application:
+		Options:
+			SideMenu:
+				CustButton:
+					text:'Download'
+					on_press: 
+						manager.current = 'downloads'	
+							
+				CustButton:
+					text: 'Playlist'
+					on_press: 
+						manager.current = 'playlist'
+				
+				CustButton:
+					text: 'Songs'
+					on_press: 
+						manager.current = 'songs'
+					
+				CustButton:
+					text: 'Settings'
+					on_press: 
+						manager.current = 'settings'
+					
+				Space:
+
+		Output:	
+			Manager: 
+				id: manager
+				transition: NoTransition()
+				Downloads:
+					
+				PlayList:
+					
+				Songs:
+				Setting:
+
+<Options>:
+	size_hint: .3, 1
+	canvas:
+		Color:
+			rgba: 0, 0, 0, 1
+		Rectangle:
+			pos: self.pos
+			size: self.size
+	orientation: 'vertical'
+	spacing: 5
+
+<Output>:
+	canvas:
+		Color:
+			rgba: 1, 1, 1, 1
+		Rectangle:
+			pos: self.pos
+			size: self.size
+		
+<Manager>:
+
+<Downloads>:
+	name: 'downloads'
+	GridLayout:
+		id: downloads
+		display: entry
+		rows: 5
+		padding: 10
+		spacing: 10
+		BoxLayout:
+			TextInput:
+				id: entry
+				size_hint: 1, .13
+				pos_hint: {'top': 1}
+				font_size: 15
+				multiline: False
+			Label:
+				text: 'downloads'
+				color: 0, 0, 0, 1
+		BoxLayout:
+		
+<Songs>:
+	name: 'songs'
+	Label: 
+		text: 'songs'
+		color: 0, 0, 0, 1
+	
+<PlayList>:
+	name: 'playlist'
+	Label: 
+		text: 'playlist'
+		color: 0, 0, 0, 1
+
+<Setting>:
+	name: 'settings'
+	Label: 
+		text: 'settings'
+		color: 0, 0, 0, 1
+
+<Space>:
+	canvas:
+		Color:
+			rgba: 0, 0, 0, 1
+		Rectangle:
+			pos: self.pos
+			size: self.size
+
+<SideMenu>:
+	size_hint: 1, .4
+	orientation: 'vertical'
+	canvas:
+		Color:
+			rgba: 0, 0, 0, 1
+		Rectangle:
+			pos: self.pos
+			size: self.size
+	spacing: 2
+		
+<TopMenu>:
+	size_hint: 1, .05
+
+<Application>:
+	orientation: 'horizontal'
+	spacing: 3
+		
