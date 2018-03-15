@@ -1,4 +1,7 @@
-#:import NoTransition kivy.uix.screenmanager.NoTransition
+#: import NoTransition kivy.uix.screenmanager.NoTransition
+#: import ListAdapter kivy.adapters.listadapter.ListAdapter
+#: import ListItemButton kivy.uix.listview.ListItemButton
+#: import main GUI.MusicAppGui
 
 <CustButton@Button>:
 	font_size: 15
@@ -48,7 +51,6 @@
 				Downloads:
 					
 				PlayList:
-					
 				Songs:
 				Setting:
 
@@ -75,35 +77,81 @@
 
 <Downloads>:
 	name: 'downloads'
+	id: downloads
+	display: entry
 	GridLayout:
-		id: downloads
-		display: entry
 		rows: 5
 		padding: 10
 		spacing: 10
 		BoxLayout:
-			TextInput:
-				id: entry
-				size_hint: 1, .13
-				pos_hint: {'top': 1}
-				font_size: 15
-				multiline: False
+			BoxLayout:
+				orientation: 'vertical'
+				BoxLayout:
+					orientation:'horizontal'
+					size_hint: 1, .15
+					TextInput:
+						id: entry
+						pos_hint: {'top': 1}
+						font_size: 15
+						multiline: False
+					Button:
+						text: 'Submit'
+						size_hint: .5, 1
+						on_press: root.submit_search(entry.text)
+				BoxLayout:
+					orientation: 'horizontal'
+					size_hint: 1, .13
+					Label:
+						text: 'File Extension:'
+						color: 0, 0, 0, 1
+						size_hint_x: .35
+						font_size: 15
+					CheckBox:
+						group:'ext'
+						value: root.mp3
+						size_hint_x: .05
+						color: 1, 0, 0, 1
+					Label:
+						text: 'mp3'
+						color: 0, 0, 0, 1
+						size_hint_x: 0.15
+						font_size: 13
+					CheckBox:
+						group:'ext'
+						value: root.mp4
+						size_hint_x: .05
+						color: 1, 0, 0, 1
+					Label:
+						text: 'mp4'
+						color: 0, 0, 0, 1
+						size_hint_x: 0.15
+						font_size: 13
+				Space:
+					canvas:
+						Color:
+							rgba: 1, 1, 1, 1
+						Rectangle:
+							pos: self.pos
+							size: self.size
 			Label:
 				text: 'downloads'
 				color: 0, 0, 0, 1
-		BoxLayout:
+				size_hint: .5, 1
+		ListView:
+			id: result_list_view
+			adapter:
+				ListAdapter(data=[], cls=main.ResultListButton)
 		
 <Songs>:
 	name: 'songs'
 	Label: 
 		text: 'songs'
 		color: 0, 0, 0, 1
-	
+		
 <PlayList>:
 	name: 'playlist'
-	Label: 
+	Label:
 		text: 'playlist'
-		color: 0, 0, 0, 1
 
 <Setting>:
 	name: 'settings'

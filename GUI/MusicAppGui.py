@@ -6,6 +6,10 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import ObjectProperty
 from kivy.uix.screenmanager import ScreenManager, Screen
+from logic import Downloader
+from logic import YTParser
+from threading import Thread
+from kivy.uix.listview import ListItemButton
 
 
 # Background layer
@@ -36,10 +40,50 @@ class Manager(ScreenManager):
 
 # Stuff for Manager
 class Downloads(Screen):
-    pass
+
+    downloader = Downloader.Downloader()
+    parser = YTParser.YTParser()
+
+    mp3 = ObjectProperty(True)
+    mp4 = ObjectProperty(False)
+
+    result_list = ObjectProperty()
+
+    def download(self, input, ext):
+
+        downloader = self.downloader
+
+        def callback():
+            downloader.download(input, ext)
+
+        if input:
+            try:
+                t = Thread(target=callback)
+                t.start()
+            except Exception:
+                print("Error")
+
+    def submit_search(self, input):
+
+        parser = self.parser
+
+        def callback():
+            self.result_list.adapter.data = parser.get_queries(input)
+            self.result_list.trigger_reset_populate()
+
+        if input:
+            try:
+                t = Thread(target=callback)
+                t.start()
+            except Exception:
+                print("Error")
 
 
 class Songs(Screen):
+    pass
+
+
+class ResultListButton(ListItemButton):
     pass
 
 
